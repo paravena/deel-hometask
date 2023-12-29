@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "build": "tsc -p .",
-    "start": "npm run build && nodemon ./dist/server.js",
+    "start": "nodemon ./dist/src/server.js",
     "seed": "npm run build && node ./dist/scripts/seedDb.js",
     "lint": "eslint '*/**/*.ts'",
     "clean": "rimraf dist",
-    "dev": "concurrently 'nodemon' 'tsc --watch --preserveWatchOutput' -n node,ts"
+    "dev": "concurrently -n nodemon, tsc 'nodemon' 'tsc --watch --preserveWatchOutput'"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

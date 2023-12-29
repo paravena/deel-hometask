@@ -13,6 +13,10 @@ app.set('models', sequelize.models);
  * FIX ME!
  * @returns contract by id
  */
+
+app.get('/', (_req, res) => {
+  res.send('Hello World! 5');
+});
 app.get('/contracts/:id', getProfile, async (req, res) => {
   const { Contract } = req.app.get('models');
   const { id } = req.params;
