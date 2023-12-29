@@ -18,6 +18,7 @@ class Profile extends Model<ProfileAttributes, ProfileCreationAttributes> implem
   public profession!: string;
   public balance!: number;
   public type!: 'client' | 'contractor';
+  public Contracts: Contract[];
 }
 
 Profile.init(
@@ -56,6 +57,8 @@ class Contract extends Model<ContractAttributes, ContractCreationAttributes> imp
   public id!: number;
   public terms!: string;
   public status!: 'new' | 'in_progress' | 'terminated';
+  public ContractorId: number;
+  public ClientId: number;
 }
 
 Contract.init(
@@ -83,8 +86,9 @@ class Job extends Model<JobAttributes, JobCreationAttributes> implements JobAttr
   public id!: number;
   public description!: string;
   public price!: number;
-  public paid!: boolean;
+  public paid!: number;
   public paymentDate!: Date;
+  public Contract: Contract;
 }
 
 Job.init(

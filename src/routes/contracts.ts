@@ -1,35 +1,28 @@
 import express from 'express';
 import { getProfile } from '../middleware';
-import { Op } from 'sequelize';
-import { sequelize } from '../model';
+import { findAllContracts, findContractById } from '../services';
 
 const router = express.Router();
-const { Contract } = sequelize.models;
 
-router.get('/', getProfile, async (req, res) => {
-  const profile = req.profile;
-  const contracts = await Contract.findAll({
-    where: {
-      status: {
-        [Op.ne]: 'terminated'
-      },
-      ClientId: profile.id
-    }
-  });
-  res.json(contracts);
+router.get('/', getProfile, async (req, res, next) => {
+  try {
+    const profile = req.profile;
+    const contracts = await findAllContracts(profile.id);
+    res.json(contracts);
+  } catch (error) {
+    next(error)
+  }
 });
 
-router.get('/:id', getProfile, async (req, res) => {
-  const { id } = req.params;
-  const profile = req.profile;
-  const contract = await Contract.findOne({
-    where: {
-      id,
-      ClientId: profile.id
-    }
-  });
-  if (!contract) return res.status(404).end();
-  res.json(contract);
+router.get('/:id', getProfile, async ({ profile, params, next }, res) => {
+  try {
+    const { id } = params;
+    const contract = await findContractById(id, profile.id)
+    if (!contract) return res.status(404).end();
+    res.json(contract);
+  } catch (error) {
+    next(error)
+  }
 });
 
 export default router;

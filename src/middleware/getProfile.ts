@@ -8,7 +8,7 @@ declare module 'express-serve-static-core' {
 }
 const getProfile = async (req: Request, res: Response, next: NextFunction) => {
   const { Profile } = req.app.get('models');
-  const profileId = parseInt(req.get('profile_id') || '0');
+  const profileId = req.get('profile_id') || '0';
 
   const profile = await Profile.findOne({
     where: { id: profileId },

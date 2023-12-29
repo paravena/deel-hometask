@@ -1,4 +1,5 @@
 import { Optional } from 'sequelize';
+import { Contract } from './model';
 
 export interface ProfileAttributes {
   id: number;
@@ -36,9 +37,21 @@ export interface JobAttributes {
   id: number;
   description: string;
   price: number;
-  paid: boolean;
+  paid: number;
   paymentDate: Date;
   ContractId?: number;
+  Contract?: Contract;
 }
 
 export interface JobCreationAttributes extends Optional<JobAttributes, "id"> {}
+
+export enum ContractStatus {
+  IN_PROGRESS = 'in_progress',
+  TERMINATED = 'terminated',
+  NEW = 'new'
+}
+
+export enum ProfileTypes {
+  CONTRACTOR = 'contractor',
+  CLIENT = 'client'
+}
