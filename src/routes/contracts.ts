@@ -1,10 +1,10 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { getProfile } from '../middleware';
 import { findAllContracts, findContractById } from '../services';
 
 const router = express.Router();
 
-router.get('/', getProfile, async (req, res, next) => {
+router.get('/', getProfile, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const profile = req.profile;
     const contracts = await findAllContracts(profile.id);
@@ -14,7 +14,7 @@ router.get('/', getProfile, async (req, res, next) => {
   }
 });
 
-router.get('/:id', getProfile, async ({ profile, params, next }, res) => {
+router.get('/:id', getProfile, async ({ profile, params}, res: Response, next: NextFunction) => {
   try {
     const { id } = params;
     const contract = await findContractById(id, profile.id)

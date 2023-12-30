@@ -1,5 +1,5 @@
 import { Contract, ContractStatus, Job, Profile, sequelize } from '../model';
-import { Op, Transaction } from 'sequelize';
+import { Op, Sequelize, Transaction } from 'sequelize';
 import { findContractorById } from './contracts';
 
 
@@ -94,4 +94,21 @@ export async function payJob(jobId: number, profile: Profile) {
     contractor,
     job,
   );
+}
+
+export async function getTotalJobSum(clientId: number) {
+  const result = await Job.findOne({
+    attributes: [
+      [Sequelize.fn('sum', Sequelize.col('price')), 'totalJobSum'],
+    ],
+    include: [{
+      model: Contract,
+      where: {
+        status: ContractStatus.IN_PROGRESS,
+        ClientId: clientId,
+      },
+    }],
+    raw: true,
+  });
+  return parseFloat(result['totalJobSum'] || '0.0');
 }
