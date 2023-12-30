@@ -15,7 +15,6 @@ router.post('/deposit/:clientId', [getProfile, bodyHasAmountMiddleware, paramsHa
   try {
     const clientId = parseInt(req.params.clientId);
     const amount = req.body.amount;
-    console.log('adding amount', amount);
     await updateBalance(clientId, amount);
     res.json({ message: `Deposit done for user ${clientId}`})
   } catch (error) {

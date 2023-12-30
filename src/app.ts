@@ -1,6 +1,6 @@
 import express from 'express';
 import { sequelize } from './model';
-import { balances, contracts, jobs } from './routes';
+import { admin, balances, contracts, jobs } from './routes';
 import { errorHandlerMiddleware } from './middleware';
 
 const app = express();
@@ -14,6 +14,7 @@ app.get('/', (_req, res) => {
 app.use('/api/contracts', contracts);
 app.use('/api/jobs', jobs);
 app.use('/api/balances', balances);
+app.use('/api/admin', admin);
 
 app.use(errorHandlerMiddleware);
 export default app;

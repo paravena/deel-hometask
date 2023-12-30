@@ -1,8 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { getProfile } from '../middleware';
 import { findAllContracts, findContractById } from '../services';
+import { param, validationResult } from 'express-validator';
 
 const router = express.Router();
+const paramsHasIdMiddleware = param('id').isNumeric();
 
 router.get('/', getProfile, async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -14,10 +16,14 @@ router.get('/', getProfile, async (req: Request, res: Response, next: NextFuncti
   }
 });
 
-router.get('/:id', getProfile, async ({ profile, params}, res: Response, next: NextFunction) => {
+router.get('/:id', [getProfile, paramsHasIdMiddleware], async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = params;
-    const contract = await findContractById(id, profile.id)
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { id } = req.params;
+    const contract = await findContractById(id, req.profile.id)
     if (!contract) return res.status(404).end();
     res.json(contract);
   } catch (error) {
