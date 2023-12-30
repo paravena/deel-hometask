@@ -1,7 +1,6 @@
-import { Job, sequelize } from '../model';
-import { col, fn, literal } from 'sequelize';
+import { sequelize } from '../model';
 
-function getRawQuery(startDate: string, endDate: string) {
+function getBestProfessionRawQuery(startDate: string, endDate: string) {
   return `SELECT
     profession,
     MAX(total) AS total
@@ -19,10 +18,34 @@ function getRawQuery(startDate: string, endDate: string) {
     GROUP BY profile.profession)`
 }
 export async function getBestProfession(start: string, end: string) {
-  const query = getRawQuery(start, end)
+  const query = getBestProfessionRawQuery(start, end)
   const result = await sequelize.query(query);
   if (result && result.length > 0) {
     return result[0][0]
   }
   return {};
+}
+
+function getBestClientsRawQuery(startDate:string, endDate:string, limit:number) {
+  return `SELECT
+    profile.id AS id,
+    profile.firstName || ' ' || profile.lastName AS fullName,
+    SUM(job.price) AS paid
+  FROM Jobs AS job
+    JOIN Contracts AS contract
+      ON contract.id = job.ContractId
+    JOIN Profiles AS profile
+      ON contract.ClientId = profile.id
+  WHERE job.paid IS NOT NULL
+    AND job.paymentDate BETWEEN '${startDate}' AND '${endDate}'
+  GROUP BY fullName
+  ORDER BY paid DESC
+  LIMIT ${limit};
+  )`;
+}
+export async function getBestClients(start: string, end: string, limit: number) {
+  const query = getBestClientsRawQuery(start, end, limit);
+  const result = await sequelize.query(query);
+
+  return result;
 }
