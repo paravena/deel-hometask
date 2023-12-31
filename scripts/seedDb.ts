@@ -1,8 +1,10 @@
 import { Contract, Job, Profile } from '../src/model';
 
-/* WARNING THIS WILL DROP THE CURRENT DATABASE */
-seed();
+seed().then(() => {
+  console.log(`Database ${process.env.DB_FILE_NAME} created`);
+});
 
+/* WARNING THIS WILL DROP THE CURRENT DATABASE */
 async function seed() {
   // create tables
   await Profile.sync({ force: true });
@@ -140,13 +142,13 @@ async function seed() {
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 1,
     }),
     Job.create({
       description: 'work',
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       price: 201,
       ContractId: 2,
@@ -154,20 +156,20 @@ async function seed() {
     Job.create({
       description: 'work',
       price: 202,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 3,
     }),
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 4,
     }),
     Job.create({
       description: 'work',
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       price: 200,
       ContractId: 7,
@@ -175,63 +177,63 @@ async function seed() {
     Job.create({
       description: 'work',
       price: 2020,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 7,
     }),
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 2,
     }),
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-16T19:11:26.737Z'),
       ContractId: 3,
     }),
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-17T19:11:26.737Z'),
       ContractId: 1,
     }),
     Job.create({
       description: 'work',
       price: 200,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-17T19:11:26.737Z'),
       ContractId: 5,
     }),
     Job.create({
       description: 'work',
       price: 21,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-10T19:11:26.737Z'),
       ContractId: 1,
     }),
     Job.create({
       description: 'work',
       price: 21,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 2,
     }),
     Job.create({
       description: 'work',
       price: 121,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-15T19:11:26.737Z'),
       ContractId: 3,
     }),
     Job.create({
       description: 'work',
       price: 121,
-      paid:true,
+      paid: 1,
       paymentDate: new Date('2020-08-14T23:11:26.737Z'),
       ContractId: 3,
     }),

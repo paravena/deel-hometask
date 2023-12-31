@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": ["src"],
+  "execMap": {
+    "js": "node"
+  },
+  "watch": ["dist"],
+  "ext": "ts,js,json,html",
+  "exec": "node -r dotenv/config ./dist/src/server.js dotenv_config_path=.env"
+}

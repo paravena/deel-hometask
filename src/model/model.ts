@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import { Sequelize, Model, DataTypes, Dialect } from 'sequelize';
 import {
   ContractAttributes,
   ContractCreationAttributes,
@@ -7,10 +7,14 @@ import {
   ProfileCreationAttributes,
   ProfileAttributes
 } from './types';
+import * as process from 'process';
+
+console.log('DB_DIALECT', process.env.DB_DIALECT);
 const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: './database.sqlite3'
+  dialect: process.env.DB_DIALECT as Dialect,
+  storage: process.env.DB_FILE_NAME
 });
+
 class Profile extends Model<ProfileAttributes, ProfileCreationAttributes> implements ProfileAttributes {
   public id!: number;
   public firstName!: string;
