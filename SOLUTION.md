@@ -1,4 +1,4 @@
-### Decisions
+## Decisions
 
 1 - One of my initial ideas was to migrate the project to typescript. At the 
 beginning everything was smooth, but the migration of the Sequelize code turned
@@ -22,6 +22,27 @@ or persist the data into the database.
 6 - Only the update balance endpoint involve the usage of transactions, since two operation need to be
 performed in order to update the balance of the Client and Contractor.
 
+## How to run the app
 
+### Running in dev mode
+
+`npm run dev`
+
+### Running in prod mode
+
+`npm start`
+
+### Running Tests 
+Even though, there is only one dummy test. all the configuration necessary 
+to run tests was done, for example setting up a test database
+
+`npm run test`
+
+### Seed Database
+
+I did some modifications compare to what was set initially, 
+basically I added environment variables
+
+`npm run seed`
 
 
