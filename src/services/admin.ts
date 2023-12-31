@@ -45,7 +45,5 @@ function getBestClientsRawQuery(startDate:string, endDate:string, limit:number) 
 }
 export async function getBestClients(start: string, end: string, limit: number) {
   const query = getBestClientsRawQuery(start, end, limit);
-  const result = await sequelize.query(query);
-
-  return result;
+  return sequelize.query(query);
 }
