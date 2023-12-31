@@ -1,4 +1,4 @@
-import { sequelize } from '@/model';
+import { sequelize } from '../model';
 
 function getBestProfessionRawQuery(startDate: string, endDate: string) {
   return `SELECT

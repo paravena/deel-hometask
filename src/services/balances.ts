@@ -1,4 +1,4 @@
-import { Profile } from '@/model';
+import { Profile } from '../model';
 import { findProfile } from './profiles';
 import { getTotalJobSum } from './jobs';
 

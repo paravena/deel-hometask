@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { getProfile } from '@/middleware';
-import { findUnpaidJobs, payJob } from '@/services';
-import { param, validationResult } from 'express-validator';
+import { param } from 'express-validator';
+import { getProfile, validateRequest } from '../middleware';
+import { findUnpaidJobs, payJob } from '../services';
 
 const router = express.Router();
 
@@ -17,12 +17,12 @@ router.get('/unpaid', getProfile, async (req: Request, res: Response, next: Next
   }
 })
 
-router.post('/:job_id/pay', [getProfile, paramsHasClientId], async (req: Request, res: Response, next: NextFunction) => {
+router.post('/:job_id/pay', [
+  getProfile,
+  paramsHasClientId,
+  validateRequest
+], async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
     const jobId = parseInt(req.params.job_id);
     const profile = req.profile;
     await payJob(jobId, profile);

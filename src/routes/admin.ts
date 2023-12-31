@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { validationResult, query } from 'express-validator';
+import { query } from 'express-validator';
 import { DateTime } from 'luxon';
-import { getBestClients, getBestProfession } from '@/services';
+import { getBestClients, getBestProfession } from '../services';
+import { validateRequest } from '../middleware';
 
 const router = express.Router();
 
@@ -21,14 +22,13 @@ function sanitizeDate(dt: string, time: { hour: number, minute: number, second: 
   return DateTime.fromFormat(dt, 'yyyy-MM-dd').set(time).toFormat('yyyy-MM-dd HH:mm:ss');
 }
 
-router.get('/best-profession',
-  [isDateValid('start'), isDateValid('end')],
+router.get('/best-profession', [
+    isDateValid('start'),
+    isDateValid('end'),
+    validateRequest
+  ],
   async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
     const start = sanitizeDate(req.query.start as string, { hour: 0, minute: 0, second: 0 });
     const end = sanitizeDate(req.query.end as string, { hour: 23, minute: 59, second: 59 });
     const result = await getBestProfession(start, end);
@@ -38,14 +38,13 @@ router.get('/best-profession',
   }
 });
 
-router.get('/best-clients',
-  [isDateValid('start'), isDateValid('end'), isLimitPresent],
+router.get('/best-clients', [
+    isDateValid('start'),
+    isDateValid('end'),
+    isLimitPresent,
+    validateRequest
+  ],
   async (req: Request, res: Response, next: NextFunction) => {
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
   try {
     const start = sanitizeDate(req.query.start as string, { hour: 0, minute: 0, second: 0 });
     const end = sanitizeDate(req.query.end as string, { hour: 23, minute: 59, second: 59 });
@@ -56,7 +55,5 @@ router.get('/best-clients',
     next(error);
   }
 })
-
-
 
 export default router;

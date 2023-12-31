@@ -7,9 +7,7 @@ import {
   ProfileCreationAttributes,
   ProfileAttributes
 } from './types';
-import * as process from 'process';
 
-console.log('DB_DIALECT', process.env.DB_DIALECT);
 const sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT as Dialect,
   storage: process.env.DB_FILE_NAME

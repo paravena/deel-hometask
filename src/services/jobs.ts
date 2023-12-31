@@ -1,7 +1,6 @@
-import { Contract, ContractStatus, Job, Profile, sequelize } from '@/model';
+import { Contract, ContractStatus, Job, Profile, sequelize } from '../model';
 import { Op, Sequelize, Transaction } from 'sequelize';
 import { findContractorById } from './contracts';
-
 
 export async function findJobById(jobId: number, profileId: number) {
   return Job.findOne({
