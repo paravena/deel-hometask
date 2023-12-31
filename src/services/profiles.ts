@@ -1,4 +1,4 @@
-import { Profile } from '../model';
+import { Profile } from '@/model';
 
 export async function findProfile(profileId: number) {
   return Profile.findOne({

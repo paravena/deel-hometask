@@ -1,10 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { validationResult, query } from 'express-validator';
 import { DateTime } from 'luxon';
-import { getBestClients, getBestProfession } from '../services';
+import { getBestClients, getBestProfession } from '@/services';
+
 const router = express.Router();
 
-const isDateValidMiddleware = (name: string) => {
+const isDateValid = (name: string) => {
   return query(name).custom((value) => {
     const dateTime = DateTime.fromFormat(value, 'yyyy-MM-dd');
     if (!dateTime.isValid) {
@@ -14,14 +15,14 @@ const isDateValidMiddleware = (name: string) => {
   });
 };
 
-const isLimitPresentMiddleware = query('limit').default(2).isNumeric();
+const isLimitPresent = query('limit').default(2).isNumeric();
 
 function sanitizeDate(dt: string, time: { hour: number, minute: number, second: number }) {
   return DateTime.fromFormat(dt, 'yyyy-MM-dd').set(time).toFormat('yyyy-MM-dd HH:mm:ss');
 }
 
 router.get('/best-profession',
-  [isDateValidMiddleware('start'), isDateValidMiddleware('end')],
+  [isDateValid('start'), isDateValid('end')],
   async (req: Request, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(req);
@@ -38,7 +39,7 @@ router.get('/best-profession',
 });
 
 router.get('/best-clients',
-  [isDateValidMiddleware('start'), isDateValidMiddleware('end'), isLimitPresentMiddleware],
+  [isDateValid('start'), isDateValid('end'), isLimitPresent],
   async (req: Request, res: Response, next: NextFunction) => {
 
   const errors = validationResult(req);

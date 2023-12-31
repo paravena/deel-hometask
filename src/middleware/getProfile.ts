@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Profile as ProfileModel } from '../model';
+import { Profile as ProfileModel } from '@/model';
 
 declare module 'express-serve-static-core' {
   interface Request {

@@ -1,7 +1,7 @@
 import express from 'express';
-import { sequelize } from './model';
-import { admin, balances, contracts, jobs } from './routes';
-import { errorHandlerMiddleware } from './middleware';
+import { sequelize } from '@/model';
+import { admin, balances, contracts, jobs } from '@/routes';
+import { errorHandlerMiddleware } from '@/middleware';
 
 const app = express();
 app.use(express.json());

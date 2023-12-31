@@ -1,13 +1,13 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { getProfile } from '../middleware';
 import { body, validationResult, param } from 'express-validator';
-import { updateBalance } from '../services';
+import { updateBalance } from '@/services';
 
 const router = express.Router();
 
-const bodyHasAmountMiddleware = body('amount').isNumeric();
-const paramsHasClientIdMiddleware = param('clientId').isNumeric();
-router.post('/deposit/:clientId', [getProfile, bodyHasAmountMiddleware, paramsHasClientIdMiddleware], async (req: Request, res: Response, next: NextFunction) => {
+const bodyHasAmount = body('amount').isNumeric();
+const paramsHasClientId = param('clientId').isNumeric();
+router.post('/deposit/:clientId', [getProfile, bodyHasAmount, paramsHasClientId], async (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -20,9 +20,6 @@ router.post('/deposit/:clientId', [getProfile, bodyHasAmountMiddleware, paramsHa
   } catch (error) {
     next(error)
   }
-
-
-
 });
 
 export default router;

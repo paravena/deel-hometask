@@ -1,4 +1,4 @@
-import { Contract, ContractStatus, Job, Profile, sequelize } from '../model';
+import { Contract, ContractStatus, Job, Profile, sequelize } from '@/model';
 import { Op, Sequelize, Transaction } from 'sequelize';
 import { findContractorById } from './contracts';
 

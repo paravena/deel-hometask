@@ -1,4 +1,4 @@
-import { Contract, ContractStatus, Profile, ProfileTypes } from '../model';
+import { Contract, ContractStatus, Profile, ProfileTypes } from '@/model';
 import { Op } from 'sequelize';
 
 export async function findAllContracts(profileId: number) {
