@@ -11,7 +11,7 @@
     "dev": "concurrently -n nodemon, tsc 'nodemon' 'tsc --watch --preserveWatchOutput'",
     "seedtest": "NODE_ENV=test node -r dotenv/config ./dist/scripts/seedDb.js dotenv_config_path=.env.test",
     "pretest": "npm run lint && npm run seedtest",
-    "test": "jest"
+    "test": "DOTENV_CONFIG_PATH=./.env.test jest --setupFiles dotenv/config"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
@@ -28,6 +28,7 @@
     "@types/node": "^20.10.5",
     "@types/sequelize": "^4.28.19",
     "@types/sqlite3": "^3.1.11",
+    "@types/supertest": "^6.0.2",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
     "concurrently": "^8.0.1",
@@ -38,7 +39,8 @@
     "prettier": "^3.1.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "supertest": "^6.3.4"
   },
   "engines": {
     "node": ">=10.16.3"
